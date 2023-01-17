@@ -2,6 +2,7 @@
 ## This code refers to version 2.5 of the robot for the 2022 - 2023 season...
 
 This robot features:
+ - Roadrunner Controlled Autonomous
  - 6 encoded motors
  - 3 servos
  - AI powered camera

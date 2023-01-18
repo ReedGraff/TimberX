@@ -14,24 +14,40 @@ import org.firstinspires.ftc.teamcode.drive.V2_5Drive;
 /*
  * This is an example of a more complex path to really test the tuning.
  */
-@Autonomous(group = "autonomous")
-public class v1Auton extends LinearOpMode {
+@Autonomous(group = "left")
+public class v1AutonLeft extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialization
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         V2_5Drive drive = new V2_5Drive(hardwareMap);
 
-        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .forward(27)
+        // Start position
+        Pose2d startPose = new Pose2d(-36, -60, Math.toRadians(0));
+        drive.setPoseEstimate(startPose);
+
+        // Build the trajectories
+        Trajectory traj1 = drive.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(90)))
                 .build();
 
-        waitForStart();
+        Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
+                .splineToLinearHeading(new Pose2d(-42, -6), Math.toRadians(85))
+                .addTemporalMarker(0.5, () -> {
+                    // Where we define peripheral movements...
+                    drive.setHorizontalSlide("leftFromLeft");
+                })
+                .build();
 
+        // Initialization ends, and the round starts
+        waitForStart();
         if (isStopRequested()) return;
 
-        drive.followTrajectory(trajectory);
+        // Movements
+        drive.followTrajectory(traj1);
+        drive.followTrajectory(traj2);
 
+        // Telemetry
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
         telemetry.addData("finalY", poseEstimate.getY());
@@ -54,4 +70,6 @@ public class v1Auton extends LinearOpMode {
                         .splineTo(new Vector2d(0, 0), Math.toRadians(180))
                         .build()
         );
+
+
  */

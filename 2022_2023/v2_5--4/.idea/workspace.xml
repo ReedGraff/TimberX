@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fb823754-cc7f-4c81-b0f2-94f0ed7d37f0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/road-runner-master/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/main/kotlin/com/acmerobotics/roadrunner/Actions.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/main/kotlin/com/acmerobotics/roadrunner/TimeTurn.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/test/kotlin/com/acmerobotics/roadrunner/ActionRegressionTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/test/kotlin/com/acmerobotics/roadrunner/ActionsTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/test/kotlin/com/acmerobotics/roadrunner/VideoTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/test/kotlin/com/acmerobotics/roadrunner/Videos.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/actions/src/test/resources/background-dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Builders.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Control.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Curves.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/DualNum.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Geometry.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Kinematics.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Math.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Profiles.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/SafeBuilders.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/main/kotlin/com/acmerobotics/roadrunner/Trajectories.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/BuildersChartTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/BuildersTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/BuildersTest2.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/Chart.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/Cookbook.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/CurvesTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/Demo.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/DualNumTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/GeometryTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/KinematicsTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/MathTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/MecanumFollowerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/ProfilesTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/core/src/test/kotlin/com/acmerobotics/roadrunner/RamseteTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/image/8393.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/image/plugin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/image/simpleTrap.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/image/transparent_field.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/notebook/road-runner-lite.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/pdf/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/pdf/Mobile_Robot_Kinematics_for_FTC.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/pdf/Mobile_Robot_Kinematics_for_FTC.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/pdf/Quintic_Splines_for_FTC.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/doc/pdf/Quintic_Splines_for_FTC.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/road-runner-master/settings.gradle.kts" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2KSS8DaszlWT1cTp4KOWOziGnrK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb823754-cc7f-4c81-b0f2-94f0ed7d37f0" name="Changes" comment="" />
+      <created>1673966329436</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673966329436</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

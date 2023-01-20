@@ -52,6 +52,8 @@ public class v1Tele extends LinearOpMode {
         long last_x_press = System.currentTimeMillis();
         long last_left_bumper_press = System.currentTimeMillis();
         long last_right_bumper_press = System.currentTimeMillis();
+        long last_left_trigger_press = System.currentTimeMillis();
+        long last_right_trigger_press = System.currentTimeMillis();
         long last_dpad_up_press = System.currentTimeMillis();
 
 
@@ -94,7 +96,7 @@ public class v1Tele extends LinearOpMode {
                     else if (grabCase == 1){
                         drive.setGrabber("grab");
                             grabCase = 0;
-                        
+
                     }
 
                 }
@@ -223,76 +225,23 @@ public class v1Tele extends LinearOpMode {
             }
 
             if (gamepad1.left_trigger>0.7) {
-                if (currentTime - last_right_bumper_press > 500) {
-                    last_right_bumper_press = System.currentTimeMillis();
-                    junction = 3;
-                    drive.setVerticalSlide("highJunction", false);
+                if (currentTime - last_right_trigger_press > 500) {
+                    last_left_trigger_press = System.currentTimeMillis();
+                    while(gamepad1.left_trigger>0.7){
+                        drive.setHorizontalSlide("move-10",false);
+                    }
                 }
             }
             if (gamepad1.dpad_right) {
-                if (currentTime - last_left_bumper_press > 500) {
-                    last_left_bumper_press = System.currentTimeMillis();
-                    junction = 0;
-                    drive.setVerticalSlide("zero", false);
-                }
-            }
-
-
-
-
-
-            /*if (gamepad1.x==true && emt == 0 && distance>=0) {
-                distance = 6000;
-                drive.linearStretch(distance);
-                emt = 1;
-                while (emt == 1){
-                    if (gamepad1.x==false){
-                        emt = 0;
+                if (currentTime - last_left_trigger_press > 500) {
+                    last_right_trigger_press = System.currentTimeMillis();
+                    while(gamepad1.right_trigger>0.7){
+                        drive.setHorizontalSlide("move10",false);
                     }
+                    
                 }
             }
 
-             */
-            /*if (gamepad1.y==true && emt == 0 && distance>0 && distance<6001) {
-                distance = 0;
-                drive.linearStretch(distance);
-                emt = 1;
-                while (emt == 1){
-                    if (gamepad1.y==false){
-                        emt = 0;
-                    }
-                }
-            }
-
-             */
-            /*
-            if (gamepad1.x==true) {
-
-                drive.release();
-
-                while (emt1 == 1){
-                    if (gamepad1.left_bumper==false){
-                        emt1 = 0;
-                    }
-                }
-
-
-            }
-            */
-            /*
-            if (gamepad1.y==true ) {
-
-                drive.grab();
-
-                while (emt1 == 1){
-                    if (gamepad1.right_bumper==false){
-                        emt1 = 0;
-                    }
-                }
-
-
-            }
-            */
 
 
         }

@@ -79,6 +79,9 @@ public class V2_5Drive extends MecanumDrive {
     public DcMotorEx horizontalSlide, verticalSlide;
     public Servo grabberLift, grabberGrab, verticalSlideGrab;
 
+    // Autonomous to TeleOp:
+    private static int parking;
+
     private BNO055IMU imu;
     private VoltageSensor batteryVoltageSensor;
 
@@ -456,11 +459,12 @@ public class V2_5Drive extends MecanumDrive {
                     grabberLift.setPosition(10);
                     break;
                 case "passing":
-                    grabberLift.setPosition(10);
+                    grabberLift.setPosition(0.8);
                     break;
                 case "wait":
-                    grabberLift.setPosition(10);
+                    grabberLift.setPosition(0.25);
                     break;
+
                 case "grab":
                     grabberGrab.setPosition(0);
                     break;
@@ -504,5 +508,14 @@ public class V2_5Drive extends MecanumDrive {
 
 
         } catch (Exception ignored) {}
+    }
+
+    // Passing values between opmodes
+    public static void changeParking(int i) {
+        parking = i;
+    }
+
+    public static int getParking(int i) {
+        return parking;
     }
 }

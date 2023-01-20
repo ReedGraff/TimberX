@@ -20,13 +20,13 @@ public class VisionTest extends LinearOpMode {
     private OpenCvCamera camera;
 
     // Name of the Webcam to be set in the config
-    private String webcamName = "Webcam 1";
+    private String webcamName = "backWebcam";
 
     @Override
     public void runOpMode() throws InterruptedException {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
-        sleeveDetection = new SleeveDetection(telemetry);
+        sleeveDetection = new SleeveDetection();
         camera.setPipeline(sleeveDetection);
 
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()

@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.util;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -89,8 +86,6 @@ public class SleeveDetection extends OpenCvPipeline {
         }
 
         // Release and return input
-        //telemetry.addData("Location", position);
-
         areaMat.release();
         return input;
     }

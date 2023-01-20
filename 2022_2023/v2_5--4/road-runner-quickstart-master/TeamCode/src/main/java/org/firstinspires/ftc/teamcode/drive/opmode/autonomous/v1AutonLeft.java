@@ -25,6 +25,12 @@ import kotlin.random.URandomKt;
  */
 @Autonomous(group = "left", preselectTeleOp="v1Tele")
 public class v1AutonLeft extends LinearOpMode {
+    private SleeveDetection sleeveDetection;
+    private OpenCvCamera camera;
+
+    // Name of the Webcam to be set in the config
+    private String webcamName = "backWebcam";
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialization
@@ -69,27 +75,29 @@ public class v1AutonLeft extends LinearOpMode {
             .build();
 
         TrajectorySequence parking1 = drive.trajectorySequenceBuilder(scoring.end())
-                .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(90)), Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(-60, -12, Math.toRadians(90)), Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(-60, -36, Math.toRadians(90)), Math.toRadians(90))
+                .lineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-60, -12, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-60, -36, Math.toRadians(90)))
                 .build();
 
         TrajectorySequence parking2 = drive.trajectorySequenceBuilder(scoring.end())
-                .splineToLinearHeading(new Pose2d(-36, -36, Math.toRadians(90)), Math.toRadians(90))
+                .lineToLinearHeading(new Pose2d(-36, -36, Math.toRadians(90)))
                 .build();
 
         TrajectorySequence parking3 = drive.trajectorySequenceBuilder(scoring.end())
-                .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(90)), Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(-12, -12, Math.toRadians(90)), Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(-12, -36, Math.toRadians(115)), Math.toRadians(115))
+                .lineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-12, -12, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-12, -36, Math.toRadians(115)))
                 .build();
 
         // Start color sensor
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "backWebcam"), cameraMonitorViewId);
-        SleeveDetection sleeveDetection = new SleeveDetection();
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
+        sleeveDetection = new SleeveDetection();
         camera.setPipeline(sleeveDetection);
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
             @Override
             public void onOpened()
             {
@@ -100,6 +108,12 @@ public class v1AutonLeft extends LinearOpMode {
             public void onError(int errorCode) {}
         });
 
+
+        telemetry.addData("Camera", sleeveDetection.getPosition());
+        telemetry.update();
+
+
+
         // Initialization ends, and the round starts
         waitForStart();
         if (isStopRequested()) return;
@@ -108,24 +122,26 @@ public class v1AutonLeft extends LinearOpMode {
         drive.followTrajectorySequence(scoring);
 
         // Passing vals to telemetry
+        drive.followTrajectorySequence(parking1);
+
         /*
-        switch (parkingDetector.getLocation()) {
-            case left:
+        switch (sleeveDetection.getPosition()) {
+            case LEFT:
                 camera.stopStreaming();
                 V2_5Drive.changeParking(1);
                 drive.followTrajectorySequence(parking1);
-            case right:
+            case CENTER:
                 camera.stopStreaming();
                 V2_5Drive.changeParking(2);
-                drive.followTrajectorySequence(parking2);
-            case middle:
+                drive.followTrajectorySequence(parking1);
+            case RIGHT:
                 camera.stopStreaming();
                 V2_5Drive.changeParking(3);
-                drive.followTrajectorySequence(parking3);
-            case notFound:
+                drive.followTrajectorySequence(parking1);
+            default:
                 camera.stopStreaming();
                 V2_5Drive.changeParking(3);
-                drive.followTrajectorySequence(parking3);
+                drive.followTrajectorySequence(parking1);
         }
         */
 
@@ -134,7 +150,6 @@ public class v1AutonLeft extends LinearOpMode {
         telemetry.addData("finalX", poseEstimate.getX());
         telemetry.addData("finalY", poseEstimate.getY());
         telemetry.addData("finalHeading", poseEstimate.getHeading());
-        telemetry.addData("camera", sleeveDetection.getPosition());
         telemetry.update();
     }
 }

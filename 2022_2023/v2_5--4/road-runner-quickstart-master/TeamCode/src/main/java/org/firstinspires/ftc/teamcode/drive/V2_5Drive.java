@@ -515,7 +515,7 @@ public class V2_5Drive extends MecanumDrive {
         parking = i;
     }
 
-    public static int getParking(int i) {
+    public static int getParking() {
         return parking;
     }
 }

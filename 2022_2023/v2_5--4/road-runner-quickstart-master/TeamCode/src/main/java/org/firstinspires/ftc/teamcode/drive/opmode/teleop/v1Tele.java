@@ -89,11 +89,12 @@ public class v1Tele extends LinearOpMode {
                     last_a_press = System.currentTimeMillis();
                     if (grabCase == 0){
                         drive.setGrabber("release");
-                        grabCase == 1;
+                        grabCase = 1;
                     }
                     else if (grabCase == 1){
-                        drive.setGrabber("grab")
-                        grabCase == 0;
+                        drive.setGrabber("grab");
+                            grabCase = 0;
+                        
                     }
 
                 }
@@ -103,11 +104,11 @@ public class v1Tele extends LinearOpMode {
                     last_b_press = System.currentTimeMillis();
                     if (grabLiftCase == 0){
                         drive.setGrabber("wait");
-                        grabLiftCase == 1;
+                        grabLiftCase = 1;
                     }
                     else if (grabLiftCase == 1){
-                        drive.setGrabber("passing")
-                        grabLiftCase == 0;
+                        drive.setGrabber("passing");
+                        grabLiftCase = 0;
                     }
                 }
             }
@@ -119,7 +120,7 @@ public class v1Tele extends LinearOpMode {
                 }
             }
 
-            if (gamepad1.x) {
+            /*if (gamepad1.x) {
                 if (currentTime - last_x_press > 1000) {
                     last_x_press = System.currentTimeMillis();
                     switch (getParking()) {
@@ -137,6 +138,8 @@ public class v1Tele extends LinearOpMode {
                     }
                 }
             }
+
+             */
 
 
             if (gamepad1.right_bumper) {
@@ -162,22 +165,22 @@ public class v1Tele extends LinearOpMode {
                     try{
                         switch (junction) {
                             case 0:
-                                verticalSlide.setVerticalSlide("lowJunction", false);
+                                drive.setVerticalSlide("lowJunction", false);
                                 junction += 1;
                                 break;
                             case 1:
-                                verticalSlide.setVerticalSlide("mediumJunction", false);
+                                drive.setVerticalSlide("mediumJunction", false);
                                 junction += 1;
                                 break;
                             case 2:
-                                verticalSlide.setVerticalSlide("highJunction", false);
+                                drive.setVerticalSlide("highJunction", false);
                                 junction += 1;
                                 break;
                             default:
                                 junction = 3;
                                 break;
                         }
-                    }
+                    }catch (Exception ignored) {}
 
                 }
             }
@@ -186,38 +189,54 @@ public class v1Tele extends LinearOpMode {
                     try{
                         switch (junction) {
                             case 1:
-                                verticalSlide.setVerticalSlide("zero", false);
+                                drive.setVerticalSlide("zero", false);
                                 junction -= 1;
                                 break;
                             case 2:
-                                verticalSlide.setVerticalSlide("lowJunction", false);
+                                drive.setVerticalSlide("lowJunction", false);
                                 junction -= 1;
                                 break;
                             case 3:
-                                verticalSlide.setVerticalSlide("mediumJunction", false);
+                                drive.setVerticalSlide("mediumJunction", false);
                                 junction -= 1;
                                 break;
                             default:
                                 junction = 0;
                                 break;
                         }
-                    }
+                    }catch (Exception ignored) {}
                 }
             }
             if (gamepad1.dpad_left) {
                 if (currentTime - last_right_bumper_press > 500) {
                     last_right_bumper_press = System.currentTimeMillis();
                     junction = 3;
-                    drive.setVerticalSlide("highJunction");
+                    drive.setVerticalSlide("highJunction", false);
                 }
             }
             if (gamepad1.dpad_right) {
                 if (currentTime - last_left_bumper_press > 500) {
                     last_left_bumper_press = System.currentTimeMillis();
                     junction = 0;
-                    drive.setVerticalSlide("zero");
+                    drive.setVerticalSlide("zero", false);
                 }
             }
+
+            if (gamepad1.left_trigger>0.7) {
+                if (currentTime - last_right_bumper_press > 500) {
+                    last_right_bumper_press = System.currentTimeMillis();
+                    junction = 3;
+                    drive.setVerticalSlide("highJunction", false);
+                }
+            }
+            if (gamepad1.dpad_right) {
+                if (currentTime - last_left_bumper_press > 500) {
+                    last_left_bumper_press = System.currentTimeMillis();
+                    junction = 0;
+                    drive.setVerticalSlide("zero", false);
+                }
+            }
+
 
 
 

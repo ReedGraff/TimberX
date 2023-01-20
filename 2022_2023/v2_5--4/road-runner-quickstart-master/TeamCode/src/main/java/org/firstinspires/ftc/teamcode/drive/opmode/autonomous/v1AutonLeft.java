@@ -10,11 +10,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.V2_5Drive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 /*
  * This is an example of a more complex path to really test the tuning.
  */
-@Autonomous(group = "left")
+@Autonomous(group = "left", preselectTeleOp="v1Tele")
 public class v1AutonLeft extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -22,30 +23,47 @@ public class v1AutonLeft extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         V2_5Drive drive = new V2_5Drive(hardwareMap);
 
+        // Set values to zero:
+        drive.setVerticalSlide("zero", true);
+        drive.setHorizontalSlide("zero", true);
+
         // Start position
-        Pose2d startPose = new Pose2d(-36, -60, Math.toRadians(0));
+        Pose2d startPose = new Pose2d(-36, -60, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
         // Build the trajectories
-        Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(90)))
-                .build();
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+            .splineToLinearHeading(new Pose2d(-36, -15, Math.toRadians(90)), Math.toRadians(90))
+            .splineToLinearHeading(new Pose2d(-37, -4, Math.toRadians(20)), Math.toRadians(20))
+            .addDisplacementMarker(() -> {
+                // Where we define peripheral movements...
+                drive.setVerticalSlide("highJunction", false);
+                drive.setHorizontalSlide("leftFromLeft", false);
+                drive.setGrabber("Wait");
+            })
+            .addTemporalMarker(1.0, 0.2, () -> {
+                drive.setVerticalSlideGrabber("highJunction");
+            })
+            .addTemporalMarker(1.0, 0.5, () -> {
+                drive.setGrabber("topStack");
 
-        Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-                .splineToLinearHeading(new Pose2d(-42, -6), Math.toRadians(85))
-                .addTemporalMarker(0.5, () -> {
-                    // Where we define peripheral movements...
-                    drive.setHorizontalSlide("leftFromLeft");
-                })
-                .build();
+                drive.setVerticalSlideGrabber("Passing");
+                drive.setVerticalSlide("Passing", false);
+            })
+            .addTemporalMarker(1.0, 1, () -> {
+                drive.setGrabber("grab");
+            })
+            .addTemporalMarker(1.0, 2.5, () -> {
+                drive.setGrabber("topStack");
+            })
+            .build();
 
         // Initialization ends, and the round starts
         waitForStart();
         if (isStopRequested()) return;
 
         // Movements
-        drive.followTrajectory(traj1);
-        drive.followTrajectory(traj2);
+        drive.followTrajectorySequence(traj1);
 
         // Telemetry
         Pose2d poseEstimate = drive.getPoseEstimate();

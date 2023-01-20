@@ -23,6 +23,14 @@ public class v1Tele extends LinearOpMode {
         // Initialize SampleMecanumDrive
         V2_5Drive drive = new V2_5Drive(hardwareMap);
 
+        // Set them to float
+        // drive.verticalSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // drive.horizontalSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        // Set values to zero:
+        drive.setVerticalSlide("zero", true);
+
+
         // We want to turn off velocity control for teleop
         // Velocity control per wheel is not necessary outside of motion profiled auto
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -35,7 +43,18 @@ public class v1Tele extends LinearOpMode {
 
         if (isStopRequested()) return;
 
+        // Define times for buttons...
+        long last_a_press = System.currentTimeMillis();
+        long last_b_press = System.currentTimeMillis();
+        long last_y_press = System.currentTimeMillis();
+        long last_x_press = System.currentTimeMillis();
+        long last_left_bumper_press = System.currentTimeMillis();
+        long last_right_bumper_press = System.currentTimeMillis();
+
+
         while (opModeIsActive() && !isStopRequested()) {
+            long currentTime = System.currentTimeMillis();
+
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,
@@ -50,19 +69,58 @@ public class v1Tele extends LinearOpMode {
             // Read pose
             Pose2d poseEstimate = drive.getPoseEstimate();
 
+
             // Print pose to telemetry
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
+            telemetry.addData("vslide", drive.verticalSlide.getCurrentPosition());
+            telemetry.addData("hslide", drive.horizontalSlide.getCurrentPosition());
             telemetry.update();
 
-            /*
+
+            // You can make 250 equal to zero... this was just an example of how you could implement holding a button vs pressing a button...
+
             if (gamepad1.a) {
-                distance += 50;
-                drive.linearPosStop();
-                drive.linearStretch(distance);
+                if (currentTime - last_a_press > 250) {
+                    last_a_press = System.currentTimeMillis();
+                    drive.setVerticalSlide("lowJunction", false);
+                }
             }
-            */
+            if (gamepad1.b) {
+                if (currentTime - last_b_press > 250) {
+                    last_b_press = System.currentTimeMillis();
+                    drive.setVerticalSlide("mediumJunction", false);
+                }
+            }
+            if (gamepad1.y) {
+                if (currentTime - last_y_press > 250) {
+                    last_y_press = System.currentTimeMillis();
+                    drive.setVerticalSlide("highJunction", false);
+                }
+            }
+            if (gamepad1.x) {
+                if (currentTime - last_x_press > 250) {
+                    last_x_press = System.currentTimeMillis();
+                    drive.setVerticalSlide("passing", false);
+                }
+            }
+            if (gamepad1.right_bumper) {
+                if (currentTime - last_right_bumper_press > 250) {
+                    last_right_bumper_press = System.currentTimeMillis();
+                    drive.setGrabber("grab");
+                }
+            }
+            if (gamepad1.left_bumper) {
+                if (currentTime - last_left_bumper_press > 250) {
+                    last_left_bumper_press = System.currentTimeMillis();
+                    drive.setGrabber("release");
+                }
+            }
+
+
+
+
             /*if (gamepad1.x==true && emt == 0 && distance>=0) {
                 distance = 6000;
                 drive.linearStretch(distance);

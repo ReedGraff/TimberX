@@ -77,7 +77,7 @@ public class V2_5Drive extends MecanumDrive {
 
     // Peripherals
     public DcMotorEx horizontalSlide, verticalSlide;
-    public Servo grabberLift, grabberGrab;
+    public Servo grabberLift, grabberGrab, verticalSlideGrab;
 
     private BNO055IMU imu;
     private VoltageSensor batteryVoltageSensor;
@@ -131,7 +131,8 @@ public class V2_5Drive extends MecanumDrive {
         horizontalSlide = hardwareMap.get(DcMotorEx.class, "horizontalSlide");
         verticalSlide = hardwareMap.get(DcMotorEx.class, "verticalSlide");
         //grabberLift = hardwareMap.get(Servo.class, "grabberLift");
-        //grabberGrab = hardwareMap.get(Servo.class, "grabberGrab");
+        grabberGrab = hardwareMap.get(Servo.class, "grabberGrab");
+        verticalSlideGrab = hardwareMap.get(Servo.class, "verticalSlideGrab");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -336,111 +337,172 @@ public class V2_5Drive extends MecanumDrive {
         generic.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void setHorizontalSlide(String type) {
-        resetEncoding(horizontalSlide);
+    public void setHorizontalSlide(String type, boolean reset) {
+        if (reset) {
+            resetEncoding(horizontalSlide);
+        }
 
         try {
-            if (type.equals("leftFromLeft")) {
-                horizontalSlide.setTargetPosition(10);
-            } else if (type.equals("leftFromRight")) {
-                horizontalSlide.setTargetPosition(10);
-            } else if (type.equals("RightFromLeft")) {
-                horizontalSlide.setTargetPosition(10);
-            } else if (type.equals("RightFromRight")) {
-                horizontalSlide.setTargetPosition(10);
+            // Stack Cones
+            // TODO: Change to grid values...
+            switch (type) {
+                case "leftFromLeft":
+                    horizontalSlide.setTargetPosition(-2000); //TODO
+
+                    break;
+                case "leftFromRight":
+                    horizontalSlide.setTargetPosition(10); // TODO
+
+                    break;
+                case "rightFromLeft":
+                    horizontalSlide.setTargetPosition(10); // TODO
+
+                    break;
+                case "rightFromRight":
+                    horizontalSlide.setTargetPosition(10); //TODO
+
+                    break;
+
+                // Human Cones
+                case "middleFromLeft":
+                    horizontalSlide.setTargetPosition(10); // TODO
+
+                    break;
+                case "middleFromRight":
+                    horizontalSlide.setTargetPosition(10); // TODO
+
+                    break;
+                case "Zero":
+                    horizontalSlide.setTargetPosition(0);
+                    break;
+                case "Base":
+                    horizontalSlide.setTargetPosition(10);
+                    break;
+                case "Passing":
+                    horizontalSlide.setTargetPosition(10);
+                    break;
+                default:
+                    throw new Exception("The 'type' was not found");
             }
 
 
-            else if (type.equals("Zero")) {
-                horizontalSlide.setTargetPosition(0);
-            } else if (type.equals("Base")) {
-                horizontalSlide.setTargetPosition(10);
-            } else if (type.equals("Passing")) {
-                horizontalSlide.setTargetPosition(10);
-            }
-
-
-            else {
-                throw new Exception("The 'type' was not found");
-            }
-
-
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
         horizontalSlide.setVelocity(500);
     }
 
 
-    public void setVerticalSlide(String type) {
-        resetEncoding(verticalSlide);
+    public void setVerticalSlide(String type, boolean reset) {
+        if (reset) {
+            resetEncoding(verticalSlide);
+        }
 
         try {
-            if (type.equals("highJunction")) {
-                verticalSlide.setTargetPosition(10);
-            } else if (type.equals("mediumJunction")) {
-                verticalSlide.setTargetPosition(10);
-            } else if (type.equals("lowJunction")) {
-                verticalSlide.setTargetPosition(10);
+            switch (type) {
+                case "highJunction":
+                    verticalSlide.setTargetPosition(-3945);
+                    break;
+                case "mediumJunction":
+                    verticalSlide.setTargetPosition(-3000);
+                    break;
+                case "lowJunction":
+                    verticalSlide.setTargetPosition(-2000);
+                    break;
+                case "zero":
+                    verticalSlide.setTargetPosition(0);
+                    break;
+                case "base":
+                    verticalSlide.setTargetPosition(-10);
+                    break;
+                case "passing":
+                    verticalSlide.setTargetPosition(-500);
+                    break;
+                default:
+                    throw new Exception("The 'type' was not found");
             }
 
 
-            else if (type.equals("Zero")) {
-                verticalSlide.setTargetPosition(0);
-            } else if (type.equals("Base")) {
-                verticalSlide.setTargetPosition(10);
-            } else if (type.equals("Passing")) {
-                verticalSlide.setTargetPosition(10);
-            }
+        } catch (Exception ignored) {}
 
-
-            else {
-                throw new Exception("The 'type' was not found");
-            }
-
-
-        } catch (Exception e) {}
-
-        verticalSlide.setVelocity(500);
+        verticalSlide.setVelocity(1500);
     }
 
 
     public void setGrabber(String type) {
 
         try {
-            if (type.equals("topStack")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
-            } else if (type.equals("2ndStack")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
-            } else if (type.equals("3rdStack")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
-            } else if (type.equals("4thStack")) {
-                grabberGrab.setPosition(0);
-                grabberLift.setPosition(10);
-            } else if (type.equals("5thStack")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
+            switch (type) {
+                case "topStack":
+                    grabberLift.setPosition(10);
+                    break;
+                case "2ndStack":
+                    grabberLift.setPosition(10);
+                    break;
+                case "3rdStack":
+                    grabberLift.setPosition(10);
+                    break;
+                case "4thStack":
+                    grabberLift.setPosition(10);
+                    break;
+                case "5thStack":
+                    grabberLift.setPosition(10);
+                    break;
+                case "Zero":
+                    grabberGrab.setPosition(0);
+                    grabberLift.setPosition(0);
+                    break;
+                case "base":
+                    grabberGrab.setPosition(10);
+                    grabberLift.setPosition(10);
+                    break;
+                case "passing":
+                    grabberLift.setPosition(10);
+                    break;
+                case "wait":
+                    grabberLift.setPosition(10);
+                    break;
+                case "grab":
+                    grabberGrab.setPosition(0);
+                    break;
+                case "release":
+                    grabberGrab.setPosition(0.25);
+                    break;
+                default:
+                    throw new Exception("The 'type' was not found");
             }
 
-            else if (type.equals("Zero")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
-            } else if (type.equals("Base")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
-            } else if (type.equals("Passing")) {
-                grabberGrab.setPosition(10);
-                grabberLift.setPosition(10);
+
+        } catch (Exception ignored) {}
+    }
+
+    public void setVerticalSlideGrabber(String type) {
+
+        try {
+            switch (type) {
+                case "highJunction":
+                case "mediumJunction":
+                    verticalSlideGrab.setPosition(0.25);
+                    break;
+                case "lowJunction":
+                    verticalSlideGrab.setPosition(0.35);
+                    break;
+                case "zero":
+                case "base":
+                    verticalSlideGrab.setPosition(0);
+                    break;
+
+                //not done
+                case "passing":
+                    verticalSlideGrab.setPosition(0.75);
+                    break;
+                case "horizontal":
+                    verticalSlideGrab.setPosition(0.5);
+                    break;
+                default:
+                    throw new Exception("The 'type' was not found");
             }
 
 
-            else {
-                throw new Exception("The 'type' was not found");
-            }
-
-
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 }

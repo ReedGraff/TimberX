@@ -365,6 +365,13 @@ public class V2_5Drive extends MecanumDrive {
                     horizontalSlide.setTargetPosition(10); //TODO
 
                     break;
+                case "move10":
+                    horizontalSlide.setTargetPosition(-10);
+                    break;
+
+                case "move-10":
+                    horizontalSlide.setTargetPosition(10);
+                    break;
 
                 // Human Cones
                 case "middleFromLeft":
@@ -484,6 +491,7 @@ public class V2_5Drive extends MecanumDrive {
         try {
             switch (type) {
                 case "highJunction":
+                    verticalSlideGrab.setPosition(0.25);
                 case "mediumJunction":
                     verticalSlideGrab.setPosition(0.25);
                     break;
@@ -509,6 +517,9 @@ public class V2_5Drive extends MecanumDrive {
 
         } catch (Exception ignored) {}
     }
+
+
+
 
     // Passing values between opmodes
     public static void changeParking(int i) {

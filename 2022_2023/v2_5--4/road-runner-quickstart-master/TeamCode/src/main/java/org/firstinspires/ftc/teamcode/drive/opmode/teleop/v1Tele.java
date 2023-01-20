@@ -17,7 +17,9 @@ import org.firstinspires.ftc.teamcode.drive.V2_5Drive;
  */
 @TeleOp(group = "teleop")
 public class v1Tele extends LinearOpMode {
-    //private int distance = 0;
+    private int grabLiftCase = 0;
+    private int grabCase = 0;
+    private int junction = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize SampleMecanumDrive
@@ -50,6 +52,9 @@ public class v1Tele extends LinearOpMode {
         long last_x_press = System.currentTimeMillis();
         long last_left_bumper_press = System.currentTimeMillis();
         long last_right_bumper_press = System.currentTimeMillis();
+        long last_left_trigger_press = System.currentTimeMillis();
+        long last_right_trigger_press = System.currentTimeMillis();
+        long last_dpad_up_press = System.currentTimeMillis();
 
 
         while (opModeIsActive() && !isStopRequested()) {
@@ -82,97 +87,161 @@ public class v1Tele extends LinearOpMode {
             // You can make 250 equal to zero... this was just an example of how you could implement holding a button vs pressing a button...
 
             if (gamepad1.a) {
-                if (currentTime - last_a_press > 250) {
+                if (currentTime - last_a_press > 1000) {
                     last_a_press = System.currentTimeMillis();
-                    drive.setVerticalSlide("lowJunction", false);
+                    if (grabCase == 0){
+                        drive.setGrabber("release");
+                        grabCase = 1;
+                    }
+                    else if (grabCase == 1){
+                        drive.setGrabber("grab");
+                            grabCase = 0;
+
+                    }
+
                 }
             }
             if (gamepad1.b) {
-                if (currentTime - last_b_press > 250) {
+                if (currentTime - last_b_press > 1000) {
                     last_b_press = System.currentTimeMillis();
-                    drive.setVerticalSlide("mediumJunction", false);
+                    if (grabLiftCase == 0){
+                        drive.setGrabber("wait");
+                        grabLiftCase = 1;
+                    }
+                    else if (grabLiftCase == 1){
+                        drive.setGrabber("passing");
+                        grabLiftCase = 0;
+                    }
                 }
             }
             if (gamepad1.y) {
-                if (currentTime - last_y_press > 250) {
+                if (currentTime - last_y_press > 1000) {
                     last_y_press = System.currentTimeMillis();
-                    drive.setVerticalSlide("highJunction", false);
-                }
-            }
-            if (gamepad1.x) {
-                if (currentTime - last_x_press > 250) {
-                    last_x_press = System.currentTimeMillis();
+                    junction = 0;
                     drive.setVerticalSlide("passing", false);
                 }
             }
+
+            /*if (gamepad1.x) {
+                if (currentTime - last_x_press > 1000) {
+                    last_x_press = System.currentTimeMillis();
+                    switch (getParking()) {
+                        case 1:
+                            ; //TODO
+                            break;
+                        case 2:
+                            ; // TODO
+                            break;
+                        case 3:
+                            ; // TODO
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+             */
+
+
             if (gamepad1.right_bumper) {
-                if (currentTime - last_right_bumper_press > 250) {
+                if (currentTime - last_right_bumper_press > 500) {
                     last_right_bumper_press = System.currentTimeMillis();
-                    drive.setGrabber("grab");
+                    if (junction == 2 || junction == 3) {
+                        drive.setVerticalSlideGrabber("mediumJunction");
+                    }
+                    else if (junction == 1){
+                        drive.setVerticalSlideGrabber("lowJunction");
+                    }
                 }
             }
             if (gamepad1.left_bumper) {
-                if (currentTime - last_left_bumper_press > 250) {
+                if (currentTime - last_left_bumper_press > 500) {
                     last_left_bumper_press = System.currentTimeMillis();
-                    drive.setGrabber("release");
+                    drive.setVerticalSlideGrabber("passing");
+                }
+            }
+            if (gamepad1.dpad_up) {
+                if (currentTime - last_right_bumper_press > 500) {
+                    last_right_bumper_press = System.currentTimeMillis();
+                    try{
+                        switch (junction) {
+                            case 0:
+                                drive.setVerticalSlide("lowJunction", false);
+                                junction += 1;
+                                break;
+                            case 1:
+                                drive.setVerticalSlide("mediumJunction", false);
+                                junction += 1;
+                                break;
+                            case 2:
+                                drive.setVerticalSlide("highJunction", false);
+                                junction += 1;
+                                break;
+                            default:
+                                junction = 3;
+                                break;
+                        }
+                    }catch (Exception ignored) {}
+
+                }
+            }
+            if (gamepad1.dpad_down) {
+                if (currentTime - last_left_bumper_press > 500) {
+                    try{
+                        switch (junction) {
+                            case 1:
+                                drive.setVerticalSlide("zero", false);
+                                junction -= 1;
+                                break;
+                            case 2:
+                                drive.setVerticalSlide("lowJunction", false);
+                                junction -= 1;
+                                break;
+                            case 3:
+                                drive.setVerticalSlide("mediumJunction", false);
+                                junction -= 1;
+                                break;
+                            default:
+                                junction = 0;
+                                break;
+                        }
+                    }catch (Exception ignored) {}
+                }
+            }
+            if (gamepad1.dpad_left) {
+                if (currentTime - last_right_bumper_press > 500) {
+                    last_right_bumper_press = System.currentTimeMillis();
+                    junction = 3;
+                    drive.setVerticalSlide("highJunction", false);
+                }
+            }
+            if (gamepad1.dpad_right) {
+                if (currentTime - last_left_bumper_press > 500) {
+                    last_left_bumper_press = System.currentTimeMillis();
+                    junction = 0;
+                    drive.setVerticalSlide("zero", false);
                 }
             }
 
-
-
-
-            /*if (gamepad1.x==true && emt == 0 && distance>=0) {
-                distance = 6000;
-                drive.linearStretch(distance);
-                emt = 1;
-                while (emt == 1){
-                    if (gamepad1.x==false){
-                        emt = 0;
+            if (gamepad1.left_trigger>0.7) {
+                if (currentTime - last_right_trigger_press > 500) {
+                    last_left_trigger_press = System.currentTimeMillis();
+                    while(gamepad1.left_trigger>0.7){
+                        drive.setHorizontalSlide("move-10",false);
                     }
                 }
             }
-
-             */
-            /*if (gamepad1.y==true && emt == 0 && distance>0 && distance<6001) {
-                distance = 0;
-                drive.linearStretch(distance);
-                emt = 1;
-                while (emt == 1){
-                    if (gamepad1.y==false){
-                        emt = 0;
+            if (gamepad1.dpad_right) {
+                if (currentTime - last_left_trigger_press > 500) {
+                    last_right_trigger_press = System.currentTimeMillis();
+                    while(gamepad1.right_trigger>0.7){
+                        drive.setHorizontalSlide("move10",false);
                     }
+                    
                 }
             }
 
-             */
-            /*
-            if (gamepad1.x==true) {
-
-                drive.release();
-
-                while (emt1 == 1){
-                    if (gamepad1.left_bumper==false){
-                        emt1 = 0;
-                    }
-                }
-
-
-            }
-            */
-            /*
-            if (gamepad1.y==true ) {
-
-                drive.grab();
-
-                while (emt1 == 1){
-                    if (gamepad1.right_bumper==false){
-                        emt1 = 0;
-                    }
-                }
-
-
-            }
-            */
 
 
         }

@@ -224,21 +224,16 @@ public class v1Tele extends LinearOpMode {
                 }
             }
 
-            if (gamepad1.left_trigger>0.7) {
-                if (currentTime - last_right_trigger_press > 500) {
+            if (gamepad1.left_trigger>0.8) {
+                if (currentTime - last_left_trigger_press > 200) {
                     last_left_trigger_press = System.currentTimeMillis();
-                    while(gamepad1.left_trigger>0.7){
-                        drive.setHorizontalSlide("move-10",false);
-                    }
+                    drive.setHorizontalSlide("move-100",false);
                 }
             }
-            if (gamepad1.dpad_right) {
-                if (currentTime - last_left_trigger_press > 500) {
+            if (gamepad1.right_trigger>0.8) {
+                if (currentTime - last_right_trigger_press > 200) {
                     last_right_trigger_press = System.currentTimeMillis();
-                    while(gamepad1.right_trigger>0.7){
-                        drive.setHorizontalSlide("move10",false);
-                    }
-                    
+                    drive.setHorizontalSlide("move100",false);
                 }
             }
 

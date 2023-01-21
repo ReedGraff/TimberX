@@ -458,7 +458,7 @@ public class V2_5Drive extends MecanumDrive {
                     grabberLift.setPosition(10);
                     break;
                 case "Zero":
-                    grabberGrab.setPosition(0);
+
                     grabberLift.setPosition(0);
                     break;
                 case "base":
@@ -518,7 +518,11 @@ public class V2_5Drive extends MecanumDrive {
         } catch (Exception ignored) {}
     }
 
-    public void setHorizontalSlideDistance(int distance){
+    public void setHorizontalSlideDistance(int distance, boolean reset){
+        if (reset) {
+            resetEncoding(horizontalSlide);
+        }
+        
         horizontalSlide.setTargetPosition(distance);
     }
 

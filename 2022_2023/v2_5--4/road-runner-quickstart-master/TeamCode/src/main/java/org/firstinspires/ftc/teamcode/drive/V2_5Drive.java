@@ -520,7 +520,6 @@ public class V2_5Drive extends MecanumDrive {
 
 
     public void stackLoop() throws InterruptedException {
-        
         sleep(1000);
         this.setVerticalSlide("highJunction", false);
         this.setHorizontalSlide("leftFromLeft", false);
@@ -569,16 +568,16 @@ public class V2_5Drive extends MecanumDrive {
                 drive.setGrabber("topStack");
             })
             */
+    }
+
+    public void setHorizontalSlideDistance(int distance, boolean reset){
+    if (reset) {
+        resetEncoding(horizontalSlide);
+    }
+    
+    horizontalSlide.setTargetPosition(distance);
 
     }
-        public void setHorizontalSlideDistance(int distance, boolean reset){
-        if (reset) {
-            resetEncoding(horizontalSlide);
-        }
-        
-        horizontalSlide.setTargetPosition(distance);
-
-
 
 
     // Passing values between opmodes

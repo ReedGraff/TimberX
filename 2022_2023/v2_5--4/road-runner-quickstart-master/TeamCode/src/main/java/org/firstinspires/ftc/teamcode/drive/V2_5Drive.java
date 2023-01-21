@@ -457,15 +457,8 @@ public class V2_5Drive extends MecanumDrive {
                     grabberLift.setPosition(0.04);
                     break;
                 case "5thStack":
+                case "zero":
                     grabberLift.setPosition(0);
-                    break;
-                case "Zero":
-                    grabberGrab.setPosition(0);
-                    grabberLift.setPosition(0);
-                    break;
-                case "base":
-                    grabberGrab.setPosition(10);
-                    grabberLift.setPosition(10);
                     break;
                 case "passing":
                     grabberLift.setPosition(0.6);

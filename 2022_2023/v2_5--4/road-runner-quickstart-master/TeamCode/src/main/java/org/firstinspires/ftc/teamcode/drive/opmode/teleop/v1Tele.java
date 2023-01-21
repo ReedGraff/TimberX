@@ -106,7 +106,7 @@ public class v1Tele extends LinearOpMode {
                 if (currentTime - last_b_press > 1000) {
                     last_b_press = System.currentTimeMillis();
                     if (grabLiftCase == 0){
-                        drive.setGrabber("wait");
+                        drive.setGrabber("zero");
                         grabLiftCase = -1;
                     }
                     else if (grabLiftCase == 1){

@@ -32,6 +32,7 @@ public class v1Tele extends LinearOpMode {
         // Set values to zero:
         drive.setVerticalSlide("zero", true);
         drive.setHorizontalSlide("Zero",true);
+        drive.setGrabber("Zero");
 
         // We want to turn off velocity control for teleop
         // Velocity control per wheel is not necessary outside of motion profiled auto
@@ -90,11 +91,11 @@ public class v1Tele extends LinearOpMode {
                 if (currentTime - last_a_press > 1000) {
                     last_a_press = System.currentTimeMillis();
                     if (grabCase == 0){
-                        drive.setGrabber("release");
+                        drive.setGrabber("grab");
                         grabCase = 1;
                     }
                     else if (grabCase == 1){
-                        drive.setGrabber("grab");
+                        drive.setGrabber("release");
                             grabCase = 0;
 
                     }

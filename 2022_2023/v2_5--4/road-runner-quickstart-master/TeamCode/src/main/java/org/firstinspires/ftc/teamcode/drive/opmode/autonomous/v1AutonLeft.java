@@ -51,6 +51,7 @@ public class v1AutonLeft extends LinearOpMode {
             .addDisplacementMarker(() -> {
                 // Where we define async peripheral movements...
                 drive.setGrabber("wait");
+                drive.setGrabber("release");
             })
             .lineToLinearHeading(new Pose2d(-37, -4, Math.toRadians(20)))
             .build();

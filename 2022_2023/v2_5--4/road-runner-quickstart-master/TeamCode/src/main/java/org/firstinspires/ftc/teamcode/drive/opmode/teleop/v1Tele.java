@@ -105,7 +105,7 @@ public class v1Tele extends LinearOpMode {
                 if (currentTime - last_b_press > 1000) {
                     last_b_press = System.currentTimeMillis();
                     if (grabLiftCase == 0){
-                        drive.setGrabber("wait");
+                        drive.setGrabber("zero");
                         grabLiftCase = 1;
                     }
                     else if (grabLiftCase == 1){
@@ -162,7 +162,7 @@ public class v1Tele extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_up) {
-                if (currentTime - last_right_bumper_press > 500) {
+                if (currentTime - last_right_bumper_press > 500) { //TODO
                     last_right_bumper_press = System.currentTimeMillis();
                     try{
                         switch (junction) {
@@ -187,7 +187,7 @@ public class v1Tele extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_down) {
-                if (currentTime - last_left_bumper_press > 500) {
+                if (currentTime - last_left_bumper_press > 500) { // TODO
                     try{
                         switch (junction) {
                             case 1:
@@ -210,14 +210,14 @@ public class v1Tele extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_left) {
-                if (currentTime - last_right_bumper_press > 500) {
+                if (currentTime - last_right_bumper_press > 500) { // TODO
                     last_right_bumper_press = System.currentTimeMillis();
                     junction = 3;
                     drive.setVerticalSlide("highJunction", false);
                 }
             }
             if (gamepad1.dpad_right) {
-                if (currentTime - last_left_bumper_press > 500) {
+                if (currentTime - last_left_bumper_press > 500) { // TODO
                     last_left_bumper_press = System.currentTimeMillis();
                     junction = 0;
                     drive.setVerticalSlide("zero", false);

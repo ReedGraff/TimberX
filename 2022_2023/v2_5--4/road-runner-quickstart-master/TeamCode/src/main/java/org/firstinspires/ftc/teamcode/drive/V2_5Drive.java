@@ -12,6 +12,8 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
+import static java.lang.Thread.sleep;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -133,7 +135,7 @@ public class V2_5Drive extends MecanumDrive {
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         horizontalSlide = hardwareMap.get(DcMotorEx.class, "horizontalSlide");
         verticalSlide = hardwareMap.get(DcMotorEx.class, "verticalSlide");
-        //grabberLift = hardwareMap.get(Servo.class, "grabberLift");
+        grabberLift = hardwareMap.get(Servo.class, "grabberLift");
         grabberGrab = hardwareMap.get(Servo.class, "grabberGrab");
         verticalSlideGrab = hardwareMap.get(Servo.class, "verticalSlideGrab");
 
@@ -457,16 +459,11 @@ public class V2_5Drive extends MecanumDrive {
                 case "5thStack":
                     grabberLift.setPosition(10);
                     break;
-                case "Zero":
-                    grabberGrab.setPosition(0);
+                case "zero":
                     grabberLift.setPosition(0);
                     break;
-                case "base":
-                    grabberGrab.setPosition(10);
-                    grabberLift.setPosition(10);
-                    break;
                 case "passing":
-                    grabberLift.setPosition(0.8);
+                    grabberLift.setPosition(0.6);
                     break;
                 case "wait":
                     grabberLift.setPosition(0.25);
@@ -518,6 +515,29 @@ public class V2_5Drive extends MecanumDrive {
         } catch (Exception ignored) {}
     }
 
+    public void stackLoop() throws InterruptedException {
+        sleep(1000);
+        this.setVerticalSlide("highJunction", false);
+        this.setHorizontalSlide("leftFromLeft", false);
+        this.setVerticalSlideGrabber("highJunction");
+
+        sleep(4);
+        this.setVerticalSlideGrabber("passing");
+
+        sleep(4);
+        this.setVerticalSlide("passing", false);
+        /*
+        sleep();
+        this.setGrabber("topStack");
+
+        this.setVerticalSlideGrabber("Passing");
+        this.setVerticalSlide("Passing", false);
+
+        this.setGrabber("grab");
+
+        this.setGrabber("topStack");
+         */
+    }
 
 
 

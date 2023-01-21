@@ -83,13 +83,15 @@ public class v1Tele extends LinearOpMode {
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.addData("vslide", drive.verticalSlide.getCurrentPosition());
             telemetry.addData("hslide", drive.horizontalSlide.getCurrentPosition());
+            telemetry.addData("grabCase", grabCase);
+            telemetry.addData("grabLiftCase", grabLiftCase);
             telemetry.update();
 
 
             // You can make 250 equal to zero... this was just an example of how you could implement holding a button vs pressing a button...
 
             if (gamepad1.a) {
-                if (currentTime - last_a_press > 1000) {
+                if (currentTime - last_a_press > 500) {
                     last_a_press = System.currentTimeMillis();
                     if (grabCase == 0){
                         drive.setGrabber("grab");
@@ -98,13 +100,12 @@ public class v1Tele extends LinearOpMode {
                     else if (grabCase == 1){
                         drive.setGrabber("release");
                             grabCase = 0;
-
                     }
 
                 }
             }
             if (gamepad1.b) {
-                if (currentTime - last_b_press > 1000) {
+                if (currentTime - last_b_press > 500) {
                     last_b_press = System.currentTimeMillis();
                     if (grabLiftCase == 0){
                         drive.setGrabber("Zero");
@@ -228,16 +229,16 @@ public class v1Tele extends LinearOpMode {
             }
 
             if (gamepad1.left_trigger>0.8) {
-                if (currentTime - last_left_trigger_press > 200) {
+                if (currentTime - last_left_trigger_press > 50) {
                     last_left_trigger_press = System.currentTimeMillis();
-                    horizontalDis -= 50;
+                    horizontalDis -= 100;
                     drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }
             if (gamepad1.right_trigger>0.8) {
-                if (currentTime - last_right_trigger_press > 200) {
+                if (currentTime - last_right_trigger_press > 50) {
                     last_right_trigger_press = System.currentTimeMillis();
-                    horizontalDis += 50;
+                    horizontalDis += 100;
                     drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }

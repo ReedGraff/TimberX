@@ -231,14 +231,14 @@ public class v1Tele extends LinearOpMode {
                 if (currentTime - last_left_trigger_press > 200) {
                     last_left_trigger_press = System.currentTimeMillis();
                     horizontalDis -= 50;
-                    drive.setHorizontalSlideDistance(horizontalDis);
+                    drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }
             if (gamepad1.right_trigger>0.8) {
                 if (currentTime - last_right_trigger_press > 200) {
                     last_right_trigger_press = System.currentTimeMillis();
                     horizontalDis += 50;
-                    drive.setHorizontalSlideDistance(horizontalDis);
+                    drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }
 

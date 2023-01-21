@@ -412,7 +412,7 @@ public class V2_5Drive extends MecanumDrive {
         try {
             switch (type) {
                 case "highJunction":
-                    verticalSlide.setTargetPosition(-3945);
+                    verticalSlide.setTargetPosition(-3965);
                     break;
                 case "mediumJunction":
                     verticalSlide.setTargetPosition(-3000);

@@ -367,12 +367,12 @@ public class V2_5Drive extends MecanumDrive {
                     horizontalSlide.setTargetPosition(10); //TODO
 
                     break;
-                case "move10":
-                    horizontalSlide.setTargetPosition(-10);
+                case "move100":
+                    horizontalSlide.setTargetPosition(-100);
                     break;
 
-                case "move-10":
-                    horizontalSlide.setTargetPosition(10);
+                case "move-100":
+                    horizontalSlide.setTargetPosition(100);
                     break;
 
                 // Human Cones

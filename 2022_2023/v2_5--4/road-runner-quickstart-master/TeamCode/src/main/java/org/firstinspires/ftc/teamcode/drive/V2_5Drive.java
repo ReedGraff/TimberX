@@ -12,8 +12,6 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
-import static java.lang.Thread.sleep;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -135,7 +133,7 @@ public class V2_5Drive extends MecanumDrive {
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         horizontalSlide = hardwareMap.get(DcMotorEx.class, "horizontalSlide");
         verticalSlide = hardwareMap.get(DcMotorEx.class, "verticalSlide");
-        grabberLift = hardwareMap.get(Servo.class, "grabberLift");
+        //grabberLift = hardwareMap.get(Servo.class, "grabberLift");
         grabberGrab = hardwareMap.get(Servo.class, "grabberGrab");
         verticalSlideGrab = hardwareMap.get(Servo.class, "verticalSlideGrab");
 
@@ -352,7 +350,7 @@ public class V2_5Drive extends MecanumDrive {
             // TODO: Change to grid values...
             switch (type) {
                 case "leftFromLeft":
-                    horizontalSlide.setTargetPosition(-1000); //TODO
+                    horizontalSlide.setTargetPosition(-2000); //TODO
 
                     break;
                 case "leftFromRight":
@@ -445,23 +443,30 @@ public class V2_5Drive extends MecanumDrive {
         try {
             switch (type) {
                 case "topStack":
-                    grabberLift.setPosition(0.1);
+                    grabberLift.setPosition(10);
                     break;
                 case "2ndStack":
-                    grabberLift.setPosition(0.08);
+                    grabberLift.setPosition(10);
                     break;
                 case "3rdStack":
-                    grabberLift.setPosition(0.06);
+                    grabberLift.setPosition(10);
                     break;
                 case "4thStack":
-                    grabberLift.setPosition(0.04);
+                    grabberLift.setPosition(10);
                     break;
                 case "5thStack":
-                case "zero":
+                    grabberLift.setPosition(10);
+                    break;
+                case "Zero":
+
                     grabberLift.setPosition(0);
                     break;
+                case "base":
+                    grabberGrab.setPosition(10);
+                    grabberLift.setPosition(10);
+                    break;
                 case "passing":
-                    grabberLift.setPosition(0.6);
+                    grabberLift.setPosition(0.8);
                     break;
                 case "wait":
                     grabberLift.setPosition(0.25);
@@ -564,7 +569,14 @@ public class V2_5Drive extends MecanumDrive {
                 drive.setGrabber("topStack");
             })
             */
+
     }
+        public void setHorizontalSlideDistance(int distance, boolean reset){
+        if (reset) {
+            resetEncoding(horizontalSlide);
+        }
+        
+        horizontalSlide.setTargetPosition(distance);
 
 
 

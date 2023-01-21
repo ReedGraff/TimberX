@@ -20,6 +20,7 @@ public class v1Tele extends LinearOpMode {
     private int grabLiftCase = 0;
     private int grabCase = 0;
     private int junction = 0;
+    private int horizontalDis = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize SampleMecanumDrive
@@ -106,16 +107,14 @@ public class v1Tele extends LinearOpMode {
                 if (currentTime - last_b_press > 1000) {
                     last_b_press = System.currentTimeMillis();
                     if (grabLiftCase == 0){
-                        drive.setGrabber("zero");
-                        grabLiftCase = -1;
+                        drive.setGrabber("Zero");
+                        grabLiftCase = 1;
                     }
                     else if (grabLiftCase == 1){
                         drive.setGrabber("passing");
                         grabLiftCase = 0;
                     }
-                    if (grabLiftCase == -1){
-                        grabLiftCase = 1;
-                    }
+
                 }
             }
             if (gamepad1.y) {
@@ -166,7 +165,7 @@ public class v1Tele extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_up) {
-                if (currentTime - last_right_bumper_press > 500) { //TODO
+                if (currentTime - last_right_bumper_press > 500) {
                     last_right_bumper_press = System.currentTimeMillis();
                     try{
                         switch (junction) {
@@ -191,7 +190,7 @@ public class v1Tele extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_down) {
-                if (currentTime - last_left_bumper_press > 500) { // TODO
+                if (currentTime - last_left_bumper_press > 500) {
                     try{
                         switch (junction) {
                             case 1:
@@ -214,14 +213,14 @@ public class v1Tele extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_left) {
-                if (currentTime - last_right_bumper_press > 500) { // TODO
+                if (currentTime - last_right_bumper_press > 500) {
                     last_right_bumper_press = System.currentTimeMillis();
                     junction = 3;
                     drive.setVerticalSlide("highJunction", false);
                 }
             }
             if (gamepad1.dpad_right) {
-                if (currentTime - last_left_bumper_press > 500) { // TODO
+                if (currentTime - last_left_bumper_press > 500) {
                     last_left_bumper_press = System.currentTimeMillis();
                     junction = 0;
                     drive.setVerticalSlide("zero", false);
@@ -231,13 +230,15 @@ public class v1Tele extends LinearOpMode {
             if (gamepad1.left_trigger>0.8) {
                 if (currentTime - last_left_trigger_press > 200) {
                     last_left_trigger_press = System.currentTimeMillis();
-                    drive.setHorizontalSlide("move-100",false);
+                    horizontalDis -= 50;
+                    drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }
             if (gamepad1.right_trigger>0.8) {
                 if (currentTime - last_right_trigger_press > 200) {
                     last_right_trigger_press = System.currentTimeMillis();
-                    drive.setHorizontalSlide("move100",false);
+                    horizontalDis += 50;
+                    drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }
 

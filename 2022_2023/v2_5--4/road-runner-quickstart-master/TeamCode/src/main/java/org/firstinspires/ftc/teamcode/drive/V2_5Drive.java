@@ -12,6 +12,8 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
+import static java.lang.Thread.sleep;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -133,7 +135,7 @@ public class V2_5Drive extends MecanumDrive {
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         horizontalSlide = hardwareMap.get(DcMotorEx.class, "horizontalSlide");
         verticalSlide = hardwareMap.get(DcMotorEx.class, "verticalSlide");
-        //grabberLift = hardwareMap.get(Servo.class, "grabberLift");
+        grabberLift = hardwareMap.get(Servo.class, "grabberLift");
         grabberGrab = hardwareMap.get(Servo.class, "grabberGrab");
         verticalSlideGrab = hardwareMap.get(Servo.class, "verticalSlideGrab");
 

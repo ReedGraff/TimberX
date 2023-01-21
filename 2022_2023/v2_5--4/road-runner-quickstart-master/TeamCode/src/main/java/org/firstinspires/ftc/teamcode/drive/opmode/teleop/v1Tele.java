@@ -107,16 +107,14 @@ public class v1Tele extends LinearOpMode {
                 if (currentTime - last_b_press > 1000) {
                     last_b_press = System.currentTimeMillis();
                     if (grabLiftCase == 0){
-                        drive.setGrabber("wait");
-                        grabLiftCase = -1;
+                        drive.setGrabber("Zero");
+                        grabLiftCase = 1;
                     }
                     else if (grabLiftCase == 1){
                         drive.setGrabber("passing");
                         grabLiftCase = 0;
                     }
-                    if (grabLiftCase == -1){
-                        grabLiftCase = 1;
-                    }
+
                 }
             }
             if (gamepad1.y) {

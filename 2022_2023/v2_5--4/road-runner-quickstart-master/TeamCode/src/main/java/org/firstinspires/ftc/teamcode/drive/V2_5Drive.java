@@ -9,6 +9,16 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCO
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
+
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
@@ -47,6 +57,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuild
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,7 +72,7 @@ public class V2_5Drive extends MecanumDrive {
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
     // Used when strafing is undershooting / overshooting the target...
-    public static double LATERAL_MULTIPLIER = 40/36.5;
+    public static double LATERAL_MULTIPLIER = 40 / 36.5;
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
@@ -333,8 +344,6 @@ public class V2_5Drive extends MecanumDrive {
     }
 
 
-
-
     // Peripherals
     public void resetEncoding(DcMotorEx generic) {
         generic.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -368,11 +377,11 @@ public class V2_5Drive extends MecanumDrive {
 
                     break;
                 case "move100":
-                    horizontalSlide.setTargetPosition(-50);
+                    horizontalSlide.setTargetPosition(-100);
                     break;
 
                 case "move-100":
-                    horizontalSlide.setTargetPosition(50);
+                    horizontalSlide.setTargetPosition(100);
                     break;
 
                 // Human Cones
@@ -398,9 +407,10 @@ public class V2_5Drive extends MecanumDrive {
             }
 
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
-        horizontalSlide.setVelocity(500);
+        horizontalSlide.setVelocity(2000);
     }
 
 
@@ -412,7 +422,7 @@ public class V2_5Drive extends MecanumDrive {
         try {
             switch (type) {
                 case "highJunction":
-                    verticalSlide.setTargetPosition(-4000);
+                    verticalSlide.setTargetPosition(-4125);
                     break;
                 case "mediumJunction":
                     verticalSlide.setTargetPosition(-3000);
@@ -434,9 +444,10 @@ public class V2_5Drive extends MecanumDrive {
             }
 
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
-        verticalSlide.setVelocity(1500);
+        verticalSlide.setVelocity(3000);
     }
 
 
@@ -460,7 +471,6 @@ public class V2_5Drive extends MecanumDrive {
                     grabberLift.setPosition(10);
                     break;
                 case "Zero":
-
                     grabberLift.setPosition(0);
                     break;
                 case "base":
@@ -468,7 +478,7 @@ public class V2_5Drive extends MecanumDrive {
                     grabberLift.setPosition(10);
                     break;
                 case "passing":
-                    grabberLift.setPosition(0.8);
+                    grabberLift.setPosition(0.65);
                     break;
                 case "wait":
                     grabberLift.setPosition(0.25);
@@ -485,7 +495,8 @@ public class V2_5Drive extends MecanumDrive {
             }
 
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     public void setVerticalSlideGrabber(String type) {
@@ -517,7 +528,8 @@ public class V2_5Drive extends MecanumDrive {
             }
 
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
 
@@ -536,22 +548,28 @@ public class V2_5Drive extends MecanumDrive {
         this.setVerticalSlideGrabber("passing");
 
         sleep(500);
-        this.setVerticalSlide("passing", false);
+        this.setVerticalSlide("zero", false);
 
         sleep(1000);
-        this.setGrabber("topStack");
-
-        sleep(1000);
-        this.setGrabber("grab");
         this.setHorizontalSlide("zero", false);
-
-        sleep(1000);
         this.setGrabber("passing");
-
-        sleep(1000);
         this.setGrabber("release");
 
-                    /*
+        sleep(500);
+        /*
+            sleep(1000);
+            this.setGrabber("topStack");
+
+            sleep(1000);
+            this.setGrabber("grab");
+            this.setHorizontalSlide("zero", false);
+
+            sleep(1000);
+            this.setGrabber("passing");
+
+            sleep(1000);
+            this.setGrabber("release");
+
             .addTemporalMarker(7.0, () -> {
             })
             .addTemporalMarker(8.0, () -> {
@@ -559,7 +577,6 @@ public class V2_5Drive extends MecanumDrive {
             })
             .addTemporalMarker(1.0, 0.5, () -> {
                 drive.setGrabber("topStack");
-
                 drive.setVerticalSlideGrabber("Passing");
                 drive.setVerticalSlide("Passing", false);
             })
@@ -572,12 +589,30 @@ public class V2_5Drive extends MecanumDrive {
             */
     }
 
-    public void setHorizontalSlideDistance(int distance, boolean reset){
-    if (reset) {
-        resetEncoding(horizontalSlide);
+    public void stackLoop2() throws InterruptedException {
+        sleep(1000);
+        this.setVerticalSlide("highJunction", false);
+
+        sleep(1000);
+        this.setVerticalSlideGrabber("highJunction");
+
+        sleep(500);
+        this.setVerticalSlideGrabber("passing");
+
+        sleep(500);
+        this.setVerticalSlide("zero", false);
+
+        sleep(1000);
+        this.setGrabber("passing");
+        this.setGrabber("release");
     }
-    
-    horizontalSlide.setTargetPosition(distance);
+
+    public void setHorizontalSlideDistance(int distance, boolean reset) {
+        if (reset) {
+            resetEncoding(horizontalSlide);
+        }
+
+        horizontalSlide.setTargetPosition(distance);
 
     }
 

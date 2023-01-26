@@ -99,7 +99,7 @@ public class v1Tele extends LinearOpMode {
                     }
                     else if (grabCase == 1){
                         drive.setGrabber("release");
-                            grabCase = 0;
+                        grabCase = 0;
                     }
 
                 }
@@ -229,14 +229,14 @@ public class v1Tele extends LinearOpMode {
             }
 
             if (gamepad1.left_trigger>0.8) {
-                if (currentTime - last_left_trigger_press > 50) {
+                if (currentTime - last_left_trigger_press > 50 && horizontalDis>=-3000) {
                     last_left_trigger_press = System.currentTimeMillis();
                     horizontalDis -= 100;
                     drive.setHorizontalSlideDistance(horizontalDis, false);
                 }
             }
             if (gamepad1.right_trigger>0.8) {
-                if (currentTime - last_right_trigger_press > 50) {
+                if (currentTime - last_right_trigger_press > 50 && horizontalDis<-99) {
                     last_right_trigger_press = System.currentTimeMillis();
                     horizontalDis += 100;
                     drive.setHorizontalSlideDistance(horizontalDis, false);

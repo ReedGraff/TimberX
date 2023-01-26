@@ -3,12 +3,9 @@ package org.firstinspires.ftc.teamcode.drive.opmode.autonomous;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.V2_5Drive;
@@ -18,13 +15,11 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import kotlin.random.URandomKt;
-
 /*
  * This is an example of a more complex path to really test the tuning.
  */
 @Autonomous(group = "left", preselectTeleOp="v1Tele")
-public class v1AutonLeft extends LinearOpMode {
+public class v1AutonRight extends LinearOpMode {
     private SleeveDetection sleeveDetection;
     private OpenCvCamera camera;
 
@@ -64,11 +59,12 @@ public class v1AutonLeft extends LinearOpMode {
             })
             .addDisplacementMarker(() -> {
                 // Where we define async peripheral movements...
-                drive.setGrabber("wait");
-                drive.setGrabber("release");
+                //drive.setGrabber("wait");
+                //drive.setGrabber("release");
             })
             //.lineToLinearHeading(new Pose2d(-37, -4, Math.toRadians(20)))
-            .lineToLinearHeading(new Pose2d(-37, -17, Math.toRadians(45)))
+            //.lineToLinearHeading(new Pose2d(-37, -17, Math.toRadians(45)))
+            .lineToLinearHeading(new Pose2d(-37, -17, Math.toRadians(90)))
             .build();
 
         TrajectorySequence parking1 = drive.trajectorySequenceBuilder(scoring.end())
@@ -111,7 +107,7 @@ public class v1AutonLeft extends LinearOpMode {
 
         // Movements
         drive.followTrajectorySequence(scoring);
-        drive.stackLoop2();
+        //drive.stackLoop2();
 
         if (V2_5Drive.getParking() == 1) {
             drive.followTrajectorySequence(parking1);

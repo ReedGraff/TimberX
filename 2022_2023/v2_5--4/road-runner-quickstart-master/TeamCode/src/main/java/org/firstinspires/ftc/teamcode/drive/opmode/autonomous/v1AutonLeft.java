@@ -42,18 +42,33 @@ public class v1AutonLeft extends LinearOpMode {
         drive.setHorizontalSlide("zero", true);
 
         // Start position
-        Pose2d startPose = new Pose2d(-36, -60, Math.toRadians(270));
+        Pose2d startPose = new Pose2d(-36, -63, Math.toRadians(270));
         drive.setPoseEstimate(startPose);
 
         // Build the trajectories
         TrajectorySequence scoring = drive.trajectorySequenceBuilder(startPose)
             .lineToLinearHeading(new Pose2d(-36, -15, Math.toRadians(270)))
+            .addTemporalMarker(1.5, ()-> {
+                // Get Color
+                SleeveDetection.ParkingPosition conePos = sleeveDetection.getPosition();
+                camera.stopStreaming();
+
+                // Passing vals to telemetry
+                if (conePos == SleeveDetection.ParkingPosition.LEFT) {
+                    V2_5Drive.changeParking(1);
+                } else if (conePos == SleeveDetection.ParkingPosition.CENTER) {
+                    V2_5Drive.changeParking(2);
+                } else {
+                    V2_5Drive.changeParking(3);
+                }
+            })
             .addDisplacementMarker(() -> {
                 // Where we define async peripheral movements...
-                drive.setGrabber("wait");
-                drive.setGrabber("release");
+                //drive.setGrabber("wait");
+                //drive.setGrabber("release");
             })
-            .lineToLinearHeading(new Pose2d(-37, -4, Math.toRadians(20)))
+            //.lineToLinearHeading(new Pose2d(-37, -4, Math.toRadians(20)))
+            .lineToLinearHeading(new Pose2d(-37, -17, Math.toRadians(45)))
             .build();
 
         TrajectorySequence parking1 = drive.trajectorySequenceBuilder(scoring.end())
@@ -94,33 +109,23 @@ public class v1AutonLeft extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        // Get Color
-        SleeveDetection.ParkingPosition conePos = sleeveDetection.getPosition();
-        camera.stopStreaming();
-
         // Movements
         drive.followTrajectorySequence(scoring);
-        drive.stackLoop();
+        //drive.stackLoop2();
 
-        // Passing vals to telemetry
-        if (conePos == SleeveDetection.ParkingPosition.LEFT) {
-            V2_5Drive.changeParking(1);
+        if (V2_5Drive.getParking() == 1) {
             drive.followTrajectorySequence(parking1);
-        } else if (conePos == SleeveDetection.ParkingPosition.CENTER) {
-            V2_5Drive.changeParking(2);
+        } else if (V2_5Drive.getParking() == 2) {
             drive.followTrajectorySequence(parking2);
         } else {
-            V2_5Drive.changeParking(3);
             drive.followTrajectorySequence(parking3);
         }
-
 
         // Telemetry
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
         telemetry.addData("finalY", poseEstimate.getY());
         telemetry.addData("finalHeading", poseEstimate.getHeading());
-        telemetry.addData("cam", conePos);
         telemetry.update();
     }
 }

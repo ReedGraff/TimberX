@@ -21,6 +21,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -70,7 +71,11 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    private DcMotorEx leftFront;
+    private DcMotorEx leftRear;
+    private DcMotorEx rightRear;
+    private DcMotorEx rightFront;
+    public DcMotorEx launch;
     private List<DcMotorEx> motors;
 
     private IMU imu;
@@ -103,8 +108,9 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
         rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        launch = hardwareMap.get(DcMotorEx.class, "launch");
 
-        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
+        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront, launch);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -123,6 +129,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         List<Integer> lastTrackingEncPositions = new ArrayList<>();
         List<Integer> lastTrackingEncVels = new ArrayList<>();
@@ -307,5 +315,39 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
+    }
+
+
+    public void resetEncoding(DcMotorEx generic) {
+        generic.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        generic.setTargetPosition(0);
+        generic.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void setLaunch(String type, boolean reset) {
+        if (reset) {
+            resetEncoding(launch);
+        }
+
+        try {
+            // Stack Cones
+            // TODO: Change to grid values...
+            switch (type) {
+                case "zero":
+                    launch.setTargetPosition(0);
+                    break;
+                case "leftFromLeft":
+                    launch.setTargetPosition(-2000);
+                    break;
+                case "leftFromRight":
+                    launch.setTargetPosition(10);
+                    break;
+                default:
+                    throw new Exception("The 'type' was not found");
+            }
+
+        } catch (Exception ignored) {}
+
+        launch.setVelocity(500);
     }
 }

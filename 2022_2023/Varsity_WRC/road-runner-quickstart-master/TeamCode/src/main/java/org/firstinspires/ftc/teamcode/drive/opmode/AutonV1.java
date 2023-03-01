@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 /*
  * This is an example of a more complex path to really test the tuning.
  */
-@Autonomous(group = "drive")
+@Autonomous(group = "drive", preselectTeleOp="TeleV1")
 public class AutonV1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,19 +23,19 @@ public class AutonV1 extends LinearOpMode {
         if (isStopRequested()) return;
 
         Pose2d startPose = new Pose2d(-60, -60, Math.toRadians(90.00));
+        drive.setPoseEstimate(startPose);
 
         TrajectorySequence movement1 = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(-60, -36))
+                .lineTo(new Vector2d(-60, -12))
                 .build();
 
-        drive.(movement1);
+        drive.followTrajectorySequence(movement1);
 
-        sleep(2000);
-
-        drive.followTrajectory(
-                drive.trajectoryBuilder(movement1.end(), true)
-                        .splineTo(new Vector2d(0, 0), Math.toRadians(180))
-                        .build()
-        );
+        // Telemetry
+        Pose2d poseEstimate = drive.getPoseEstimate();
+        telemetry.addData("finalX", poseEstimate.getX());
+        telemetry.addData("finalY", poseEstimate.getY());
+        telemetry.addData("finalHeading", poseEstimate.getHeading());
+        telemetry.update();
     }
 }
